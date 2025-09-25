@@ -7,7 +7,11 @@ import random
 app = Flask(__name__)
 
 # Initialize OpenAI client
-client = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
+api_key = os.environ.get('OPENAI_API_KEY')
+if not api_key:
+    raise ValueError("OPENAI_API_KEY environment variable not set")
+
+client = OpenAI(api_key=api_key)
 
 # HTML template with dark theme for SRE vibes
 HTML_TEMPLATE = '''
@@ -112,10 +116,10 @@ HTML_TEMPLATE = '''
 </head>
 <body>
     <div class="gpu-info">
-        🔥 GPU: 50% allocated by KAI
+        GPU: 50% allocated by KAI
     </div>
     <div class="container">
-        <h1>🔥 SRE Haiku Horror Generator 🔥</h1>
+        <h1>SRE Haiku Horror Generator</h1>
         <div class="subtitle">Powered by fractional GPU allocation via KAI Scheduler</div>
         <div id="haiku-display">
             Click the button to summon<br>
